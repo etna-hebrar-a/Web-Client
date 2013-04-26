@@ -1,0 +1,20 @@
+{
+    "new_auth_key": "xxxxxxxxxxxxxxxxxxxxx",
+        "nbtotal":"x",
+        "downloads": {
+            "dl1 ? ": {
+                "id_dl": "xx",
+                "name": "xxx",
+                "size_tot": "xxx",
+                "size_dl": "xxx",
+                "date_ajout": "AAAA-MM-JJ HH:MM:SS"
+            }
+            "dl 2": {
+                "id_dl": "xx",
+                "name": "xxx",
+                "size_tot": "xxx",
+                "size_dl": "xxx",
+                "date_ajout": "AAAA-MM-JJ HH:MM:SS"
+            }
+        }
+}

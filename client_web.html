@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="angular.min.js"></script>
+    <script src="torrent.js"></script>
+  </head>
+  <body>
+  	<div ng-controller="Ctrl2">
+
+	<button ng-click="addTorrent()">
+		Ajouter un torrent
+	</button>
+	<ul>
+	<li ng-repeat="torrent in torrents">
+		<span>{{torrent.text}}</span>
+	</li>
+	</ul>
+	<div>
+		{{nbTorrent}}
+	</div>
+    <div ng-click="showall()"> 
+		tout 
+	</div>
+	<div> 
+		telechargement en cours 
+	</div>
+	<div> 
+		envoie en cours 
+	</div>
+	<div>
+		en pause
+	</div>
+	</div>
+  </body>
+</html>
