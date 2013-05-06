@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <script src="./angular.min.js"></script>
         <script type="text/javascript">
+            $scope.filtre = null;
             function getAddressListTorrent() {
                 return './list_torrent.json';
             }
@@ -24,32 +25,20 @@
         <title>Web Client</title>
     </head>
     <body>
-    <div ng-click=""> 
-        tout 
-        <div class="container" ng-controller="listTorrentCtrl">
-            Search: <input ng-model="query">
-            <br />
-            Nombre de dl : {{downloads.length}}
-            <ul>
-                <li ng-repeat="download in downloads | filter:custumFilter | orderBy:orderId">
-                    id : {{download.id_dl}} <br />
-                    name : {{download.name}} <br />
-                    taille : {{download.size_tot}} <br />
-                    taille dl : {{download.size_dl}} <br />
-                    Date d'ajout : {{download.date_ajout}} <br />
-                    Status : {{download.status}}
-                </li>
-            </ul>
-        </div>
+    <div ng-click="filtre.status = ''"> 
+        Tout 
     </div>
-    <div ng-click="">
-        telechargement en cours 
+    <div ng-click="filtre.status = 'play'">
+        Telechargement en cours 
     </div>
-    <div> 
-        envoie en cours 
+    <div ng-click="filtre.status = 'send'"> 
+        Envoie en cours 
     </div>
-    <div>
-        en pause
+    <div ng-click="filtre.status = 'pause'">
+        En pause
+    </div>
+    <div ng-click="filtre.status = 'stop'">
+        Areter
     </div>
         <div class="navbar navbar-fixed-top">
             top_navbar
@@ -57,9 +46,9 @@
         <div class="container" ng-controller="listTorrentCtrl">
             Search: <input ng-model="query">
             <br />
-            Nombre de dl : {{downloads.length}}
+            Nombre total de dl : {{downloads.length}}
             <ul>
-                <li ng-repeat="download in downloads | filter:query | orderBy:orderId">
+                <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
                     id : {{download.id_dl}} <br />
                     name : {{download.name}} <br />
                     taille : {{download.size_tot}} <br />
