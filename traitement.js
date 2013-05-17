@@ -3,25 +3,6 @@ function getAddressListTorrent() {
 }
 
 function listTorrentCtrl($scope, $http) {
-    $scope.downloads = getDownloads();
-    angular.forEach($scope.downloads, function(download) {
-      download.bar = (download.size_dl / download.size_tot) * 100
-      if (download.bar == 100) {
-        download.bar_type = 'bar-success';
-        if(download.status == 'send') 
-          download.bar_status == 'progress-striped active';
-      }
-      else if (download.status == 'pause') {
-        download.bar_type = 'bar-warning ';
-        download.bar_status = 'progress-striped'
-      }
-      else if(download.status == 'stop')
-        download.bar_type = 'bar-danger';
-      else
-        download.bar_status = 'progress-striped active';
-
-    });
-
   function getDownloads() {
     myTab = new Array();
     $http.get(getAddressListTorrent()).success(function(data){
@@ -35,10 +16,29 @@ function listTorrentCtrl($scope, $http) {
         myTab[i].size_dl = d.size_dl;
         myTab[i].speed = d.speed;
         myTab[i].date_ajout = d.date_ajout;
+        ++i;
       })
     })
     return myTab;
   }
+
+  $scope.downloads = getDownloads();
+  angular.forEach($scope.downloads, function(download) {
+    download.bar = 30;//(download.size_dl / download.size_tot) * 100
+    if (download.bar == 100) {
+      download.bar_type = 'bar-success';
+      if(download.status == 'send') 
+        download.bar_status == 'progress-striped active';
+    }
+    else if (download.status == 'pause') {
+      download.bar_type = 'bar-warning ';
+      download.bar_status = 'progress-striped'
+    }
+    else if(download.status == 'stop')
+      download.bar_type = 'bar-danger';
+    else
+      download.bar_status = 'progress-striped active';
+  });
 
   $scope.orderId = 'id_dl';
   $scope.custumFilter = function(download) {
