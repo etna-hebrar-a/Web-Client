@@ -2,8 +2,8 @@
 {
     "id_dl": "1",
     "name": "Ubuntu server qui rox",
-    "size_tot": "5Go",
-    "size_dl": "3,2Go",
+    "size_tot": "5000",
+    "size_dl": "3200",
 	"speed": "325Ko/s",
 	"status": "play",
     "date_ajout": "2013-02-20 18:32:24"
@@ -11,8 +11,8 @@
 {
     "id_dl": "2",
     "name": "Une iso pourri",
-    "size_tot": "2Go",
-    "size_dl": "1Go",
+    "size_tot": "2000",
+    "size_dl": "200",
 	"speed": "0Ko/s",
 	"status": "pause",
     "date_ajout": "2013-03-20 03:15:55"
@@ -20,8 +20,8 @@
 {
     "id_dl": "3",
     "name": "Une iso pourri2",
-    "size_tot": "8Go",
-    "size_dl": "8Go",
+    "size_tot": "800",
+    "size_dl": "800",
 	"speed": "0Ko/s",
 	"status": "stop",
     "date_ajout": "2013-03-20 03:15:55"

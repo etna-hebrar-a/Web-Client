@@ -38,7 +38,8 @@
                     <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
                         id : {{download.id_dl}} <br />
                         name : {{download.name}} <br />
-                        <div class="progress progress-striped active">
+                        <div class="progress progress-striped active" style="text-align=center;">
+                            {{download.bar}}%
                             <div class="bar" style="width: {{download.bar}}%;"></div>
                         </div>
                         taille : {{download.size_tot}} <br />
