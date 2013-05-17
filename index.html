@@ -1,62 +1,55 @@
 <!doctype html>
 <html ng-app>
-    <head>
-        <meta charset="utf-8">
-        <script src="./angular.min.js"></script>
-        <script type="text/javascript">
-            $scope.filtre = null;
-            function getAddressListTorrent() {
-                return './list_torrent.json';
-            }
-
-            function listTorrentCtrl($scope, $http) {
-                  $http.get(getAddressListTorrent()).success(function(data) {
-                              $scope.downloads = data;
-                     });
-                   
-                    $scope.orderId = 'id_dl';
-                    $scope.custumFilter = function(download) {
-                       return download.status == 'pause';
-                    }
-            }
-            
-            
-            </script>
-        <title>Web Client</title>
-    </head>
-    <body>
-    <div ng-click="filtre.status = ''"> 
-        Tout 
-    </div>
-    <div ng-click="filtre.status = 'play'">
-        Telechargement en cours 
-    </div>
-    <div ng-click="filtre.status = 'send'"> 
-        Envoie en cours 
-    </div>
-    <div ng-click="filtre.status = 'pause'">
-        En pause
-    </div>
-    <div ng-click="filtre.status = 'stop'">
-        Areter
-    </div>
-        <div class="navbar navbar-fixed-top">
-            top_navbar
+<head>
+    <meta charset="utf-8">
+    <script src="./angular.min.js"></script>
+    <script src="./traitement.js" ></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <title>Web Client</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span2">
+                <div class="btn-group btn-group-vertical">
+                    <button type="button" class="btn" ng-click="filtre.status = ''"> 
+                        Tout 
+                    </button>
+                    <button type="button" class="btn" ng-click="filtre.status = 'play'">
+                        Telechargement en cours 
+                    </button>
+                    <button type="button" class="btn"  ng-click="filtre.status = 'send'"> 
+                        Envoie en cours 
+                    </button>
+                    <button type="button" class="btn"  ng-click="filtre.status = 'pause'">
+                        En pause
+                    </button>
+                    <button type="button" class="btn"  ng-click="filtre.status = 'stop'">
+                        Areter
+                    </button>
+                </div>
+            </div> 
+            <div class="span10">
+              <div class="container" ng-controller="listTorrentCtrl">
+                Search: <input ng-model="query">
+                <br />
+                Nombre total de dl : {{downloads.length}}
+                <ul>
+                    <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
+                        id : {{download.id_dl}} <br />
+                        name : {{download.name}} <br />
+                        <div class="progress progress-striped active">
+                            <div class="bar" style="width: {{download.bar}}%;"></div>
+                        </div>
+                        taille : {{download.size_tot}} <br />
+                        taille dl : {{download.size_dl}} <br />
+                        Date d'ajout : {{download.date_ajout}} <br />
+                        Status : {{download.status}} <br />
+                    </li>
+                </ul>
+            </div>
+            </div>
         </div>
-        <div class="container" ng-controller="listTorrentCtrl">
-            Search: <input ng-model="query">
-            <br />
-            Nombre total de dl : {{downloads.length}}
-            <ul>
-                <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
-                    id : {{download.id_dl}} <br />
-                    name : {{download.name}} <br />
-                    taille : {{download.size_tot}} <br />
-                    taille dl : {{download.size_dl}} <br />
-                    Date d'ajout : {{download.date_ajout}} <br />
-                    Status : {{download.status}} <br />
-                </li>
-            </ul>
-        </div>
-    </body>
+    </div>
+</body>
 </html>
