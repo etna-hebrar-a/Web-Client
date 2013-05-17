@@ -36,11 +36,9 @@
                 Nombre total de dl : {{downloads.length}}
                 <ul>
                     <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
-                        id : {{download.id_dl}} <br />
-                        name : {{download.name}} <br />
-                        <div class="progress progress-striped active" style="text-align=center;">
-                            {{download.bar}}%
-                            <div class="bar" style="width: {{download.bar}}%;"></div>
+                        <h1>{{download.name}} </h1><br />
+                        <div class="progress {{download.bar_status}} ">
+                            <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>
                         </div>
                         taille : {{download.size_tot}} <br />
                         taille dl : {{download.size_dl}} <br />
