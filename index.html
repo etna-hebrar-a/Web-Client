@@ -5,6 +5,7 @@
     <script src="./angular.min.js"></script>
     <script src="./traitement.js" ></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <title>Web Client</title>
 </head>
 <body>
@@ -32,10 +33,12 @@
             <div class="span10">
               <div class="container" ng-controller="listTorrentCtrl">
                 Search: <input ng-model="query">
+                Sort by : <select ng-model="order" ng-options="o.name for o in orders"></select>
+                <button type="button" class="btn btn-primary" ng-click="Desc=!Desc">Desc</button>
                 <br />
                 Nombre total de dl : {{downloads.length}}
                 <ul>
-                    <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:orderId">
+                    <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:order.value:Desc">
                         <h1>{{download.name}} </h1><br />
                         <div class="progress {{download.bar_status}} ">
                             <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>

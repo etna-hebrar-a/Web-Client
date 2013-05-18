@@ -19,10 +19,19 @@ function abstraction(data) {
   return myTab;
 }
 
+function conversOctet(size) {
+  if (size < 1024) return size + 'Ko';
+  if ((size /= 1024) < 1024) return size.toFixed(2) + 'Mo';
+  if ((size /= 1024) < 1024) return size.toFixed(2) + 'Go';
+  if ((size /= 1024) < 1024) return size.toFixed(2) + 'To';
+}
+
+
 function listTorrentCtrl($scope, $http) {
   $http.get(getAddressListTorrent()).success(function(data){
     $scope.downloads = abstraction(data);
     angular.forEach($scope.downloads, function(download) {
+      //calcul pourcentage et status bar
       download.bar = (download.size_dl / download.size_tot) * 100
       if (download.bar == 100) {
         download.bar_type = 'bar-success';
@@ -37,6 +46,9 @@ function listTorrentCtrl($scope, $http) {
         download.bar_type = 'bar-danger';
       else
         download.bar_status = 'progress-striped active';
+      // convertion unite en patant du principe que l'unité de base est le Ko
+      download.size_tot = conversOctet(download.size_tot);
+      download.size_dl = conversOctet(download.size_dl);
     });
   });
 
@@ -58,7 +70,12 @@ function listTorrentCtrl($scope, $http) {
       return myTab;
     }*/
 
-    $scope.orderId = 'id_dl';
+    $scope.orders = [
+      {name: 'id' , value:'id_dl'},
+      {name: 'date d\'ajout' , value:'date_ajout'},
+      {name: 'progression' , value: 'bar'}
+      ];
+    $scope.order = $scope.orders[0];
     $scope.custumFilter = function(download) {
       return download.status == 'pause';
     }
