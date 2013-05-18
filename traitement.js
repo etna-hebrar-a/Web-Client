@@ -1,3 +1,4 @@
+angular.module('ClientWeb', ['ui.bootstrap']);
 function getAddressListTorrent() {
   return './list_torrent.json';
 }
@@ -52,31 +53,41 @@ function listTorrentCtrl($scope, $http) {
     });
   });
 
-  /*  function getDownloads() {
-      myTab = new Array();
-      $http.get(getAddressListTorrent()).success(function(data){
-      var i = 0;
-      angular.forEach(data, function(d){
-      myTab[i] = new Object();
-      myTab[i].id_dl = d.id_dl;
-      myTab[i].status = d.status;
-      myTab[i].name = d.name;
-      myTab[i].size_tot = d.size_tot;
-      myTab[i].size_dl = d.size_dl;
-      myTab[i].speed = d.speed;
-      myTab[i].date_ajout = d.date_ajout;
-      })
-      })
-      return myTab;
-    }*/
-
     $scope.orders = [
       {name: 'id' , value:'id_dl'},
       {name: 'date d\'ajout' , value:'date_ajout'},
       {name: 'progression' , value: 'bar'}
       ];
     $scope.order = $scope.orders[0];
-    $scope.custumFilter = function(download) {
-      return download.status == 'pause';
-    }
+    $scope.desc = false;
   }
+
+var ajoutTelechargementCtrl = function ($scope) {
+
+  $scope.alerts = [];
+
+  $scope.open = function () {
+    $scope.shouldBeOpen = true;
+  };
+
+  $scope.close = function () {
+    $scope.shouldBeOpen = false;
+  };
+
+  $scope.send = function () {
+    $scope.alerts.push({type: 'success', msg: 'Telechargement envoyer'});
+    $scope.shouldBeOpen = false;
+  }
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+  $scope.items = ['item1', 'item2'];
+
+  $scope.opts = {
+    backdropFade: true,
+    dialogFade:true
+  };
+
+};
