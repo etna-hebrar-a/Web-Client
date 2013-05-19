@@ -50,19 +50,22 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn" ng-click="filtre.status = ''"> 
+                    <button type="button" class="btn" ng-click="filtre.status = ''; filtre.bar = ''"> 
                         Tout 
                     </button>
-                    <button type="button" class="btn" ng-click="filtre.status = 'play'">
+                    <button type="button" class="btn" ng-click="filtre.bar = '100'; filtre.status = ''"> 
+                        Telechargement fini 
+                    </button>
+                    <button type="button" class="btn" ng-click="filtre.status = 'play'; filtre.bar = ''">
                         Telechargement en cours 
                     </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'send'"> 
+                    <button type="button" class="btn"  ng-click="filtre.status = 'send'; filtre.bar = ''"> 
                         Envoie en cours 
                     </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'pause'">
+                    <button type="button" class="btn"  ng-click="filtre.status = 'pause'; filtre.bar = ''">
                         En pause
                     </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'stop'">
+                    <button type="button" class="btn"  ng-click="filtre.status = 'stop'; filtre.bar = ''">
                         Areter
                     </button>
                 </div>

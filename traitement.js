@@ -37,7 +37,7 @@ function listTorrentCtrl($scope, $http) {
       if (download.bar == 100) {
         download.bar_type = 'bar-success';
         if(download.status == 'send') 
-          download.bar_status == 'progress-striped active';
+          download.bar_status = 'progress-striped active';
       }
       else if (download.status == 'pause') {
         download.bar_type = 'bar-warning ';
