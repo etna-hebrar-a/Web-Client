@@ -1,0 +1,21 @@
+.titre {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.progress {
+	margin-top: 5px;
+}
+
+.pair {
+	background: #E8EDFF;
+}
+
+.pair, .impair {
+	padding: 1px 20px;
+}
+
+body {
+	background: #F2F2F2;
+}

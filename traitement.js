@@ -50,9 +50,15 @@ function listTorrentCtrl($scope, $http) {
       // convertion unite en patant du principe que l'unité de base est le Ko
       download.size_tot = conversOctet(download.size_tot);
       download.size_dl = conversOctet(download.size_dl);
+      download.collapse = true;
     });
   });
 
+    $scope.collapse = function(downloads, id) {
+        angular.forEach(downloads, function(download) {
+          download.collapse = ((download.id_dl != id) ? true : download.collapse);
+        });
+    }
     $scope.orders = [
       {name: 'id' , value:'id_dl'},
       {name: 'date d\'ajout' , value:'date_ajout'},
@@ -60,6 +66,7 @@ function listTorrentCtrl($scope, $http) {
       ];
     $scope.order = $scope.orders[0];
     $scope.desc = false;
+    $scope.pair = ['pair', 'impair'];
   }
 
 var ajoutTelechargementCtrl = function ($scope) {
@@ -91,3 +98,8 @@ var ajoutTelechargementCtrl = function ($scope) {
   };
 
 };
+
+function Accordion($scope) {
+  $scope.one = true;
+  $scope.downloads = [];
+}

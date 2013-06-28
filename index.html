@@ -5,13 +5,55 @@
     <script src="./angular.min.js"></script>
     <script src="./traitement.js" ></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="bootstrap/js/ui-bootstrap-tpls-0.3.0.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="bootstrap/js/ui-bootstrap-0.3.0.min.js" type="text/javascript"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <title>Web Client</title>
 </head>
 <body>
-    <div class="container-fluid">
+
+
+<div ng-controller="listTorrentCtrl">
+<div class="navbar navbar-inverse navbar-fixed-top" >
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Shunt.png</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li class="divider-vertical"></li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Serveurs <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Serveur 1</a></li>
+                  <li><a href="#">Serveur 2</a></li>
+                  <li><a href="#">Serveur 3</a></li>
+                </ul>
+              </li>
+              <li class="divider-vertical"></li>
+                           <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">T&eacute;l&eacute;chargements </a>
+              </li>
+              <li class="divider-vertical"></li>
+              <li><a href="#info">Informations</a></li>
+
+            </ul>
+            <form class="navbar-form pull-left">
+                <input type="text" class="search-query" placeholder="Search" ng-model="query">
+                <select ng-model="order" ng-options="o.name for o in orders"></select>
+                <button type="button" class="btn btn-primary" ng-model="desc" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                    Desc
+                </button>
+        </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" style="margin-top: 100px">
         <div class="row-fluid">
             <div class="span2">
                 <div class="btn-group btn-group-vertical">
@@ -50,50 +92,52 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn" ng-click="filtre.status = ''; filtre.bar = ''"> 
-                        Tout 
-                    </button>
-                    <button type="button" class="btn" ng-click="filtre.bar = '100'; filtre.status = ''"> 
-                        Telechargement fini 
-                    </button>
-                    <button type="button" class="btn" ng-click="filtre.status = 'play'; filtre.bar = ''">
-                        Telechargement en cours 
-                    </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'send'; filtre.bar = ''"> 
-                        Envoie en cours 
-                    </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'pause'; filtre.bar = ''">
-                        En pause
-                    </button>
-                    <button type="button" class="btn"  ng-click="filtre.status = 'stop'; filtre.bar = ''">
-                        Areter
-                    </button>
+                    <div class="filter">
+                        <button type="button" class="btn btn-block" ng-click="filtre.status = ''; filtre.bar = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"> 
+                            Tout 
+                        </button>
+                        <button type="button" class="btn btn-block" ng-click="filtre.bar = '100'; filtre.status = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"> 
+                            Telechargement fini 
+                        </button>
+                        <button type="button" class="btn btn-block" ng-click="filtre.status = 'play'; filtre.bar = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                            Telechargement en cours 
+                        </button>
+                        <button type="button" class="btn btn-block"  ng-click="filtre.status = 'send'; filtre.bar = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"> 
+                            Envoie en cours 
+                        </button>
+                        <button type="button" class="btn btn-block"  ng-click="filtre.status = 'pause'; filtre.bar = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                            En pause
+                        </button>
+                        <button type="button" class="btn btn-block"  ng-click="filtre.status = 'stop'; filtre.bar = ''" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                            Areter
+                        </button>
+                    </div>
                 </div>
             </div> 
             <div class="span10">
-              <div class="container" ng-controller="listTorrentCtrl">
-                Search: <input ng-model="query">
-                Sort by : <select ng-model="order" ng-options="o.name for o in orders"></select>
-                <button type="button" class="btn btn-primary" ng-model="desc" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                    Desc
-                </button>
+              <div class="container" >
+                
                 <br />
                 Nombre total de dl : {{downloads.length}}
-                <ul>
-                    <li ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:order.value:desc">
-                        <h1>{{download.name}} </h1><br />
-                        <div class="progress {{download.bar_status}} ">
-                            <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>
+                    <div class="{{pair[$index%2]}}" ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:order.value:desc">
+                        <div ng-click="collapse(downloads, download.id_dl) ; download.collapse = !download.collapse">
+                            <div class='titre'>{{download.name}}</div>
+                            <div class="progress {{download.bar_status}} ">
+                                <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>
+                            </div>
                         </div>
-                        taille : {{download.size_tot}} <br />
-                        taille dl : {{download.size_dl}} <br />
-                        Date d'ajout : {{download.date_ajout}} <br />
-                        Status : {{download.status}} <br />
-                    </li>
-                </ul>
+                        <div collapse="download.collapse">
+                            <div class='size'> taille : {{download.size_tot}} <div>
+                            <div class='size_tot'>taille dl : {{download.size_dl}} </div>
+                            <div class='date'>Date d'ajout : {{download.date_ajout}} </div>
+                            <div class='status'>Status : {{download.status}} </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
