@@ -19,3 +19,11 @@
 body {
 	background: #F2F2F2;
 }
+
+.navbar .brand {
+    padding: 0;
+}
+
+.add .ng-scope {
+	display: inline-block;
+}

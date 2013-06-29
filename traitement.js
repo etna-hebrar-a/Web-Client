@@ -27,7 +27,6 @@ function conversOctet(size) {
   if ((size /= 1024) < 1024) return size.toFixed(2) + 'To';
 }
 
-
 function listTorrentCtrl($scope, $http) {
   $http.get(getAddressListTorrent()).success(function(data){
     $scope.downloads = abstraction(data);
@@ -60,14 +59,15 @@ function listTorrentCtrl($scope, $http) {
         });
     }
     $scope.orders = [
-      {name: 'id' , value:'id_dl'},
       {name: 'date d\'ajout' , value:'date_ajout'},
-      {name: 'progression' , value: 'bar'}
+      {name: 'progression' , value: 'bar'},
+      {name: "vitesse de téléchargement" , value: 'speed'}
       ];
     $scope.order = $scope.orders[0];
     $scope.desc = false;
     $scope.pair = ['pair', 'impair'];
-  }
+    $scope.test = 'all';
+    }
 
 var ajoutTelechargementCtrl = function ($scope) {
 
@@ -84,7 +84,7 @@ var ajoutTelechargementCtrl = function ($scope) {
   $scope.send = function () {
     $scope.alerts.push({type: 'success', msg: 'Telechargement envoyer'});
     $scope.shouldBeOpen = false;
-  }
+  };
 
   $scope.closeAlert = function(index) {
     $scope.alerts.splice(index, 1);
@@ -98,8 +98,3 @@ var ajoutTelechargementCtrl = function ($scope) {
   };
 
 };
-
-function Accordion($scope) {
-  $scope.one = true;
-  $scope.downloads = [];
-}
