@@ -5,14 +5,21 @@ function getAddressAdmin() {
 
 function abstraction(data) {
   myTab = new Object();
-  myTab.ip = data.ip;
-  myTab.users = data.users;
+  myTab.ip = data[0].ip;
+  myTab.users = data[0].users;
   return myTab;
 }
 
-function adminCtrl($scope, $http) {
+function adminDeamonCtrl($scope, $http) {
   $http.get(getAddressAdmin()).success(function(data){
-    $scope.admin = data.ip;
-    
+    $scope.donnee = abstraction(data)
+  })
+  .error(function(data){
+    $scope.ip = 'error';
   });
+  $scope.addUser = '';
+  $scope.add = function() {
+    $scope.donnee.users.push($scope.addUser);
+    $scope.addUser = '';
+  };
 }

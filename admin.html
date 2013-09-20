@@ -36,13 +36,25 @@
 			</div>
 			</div>
 			<div class="container-fluid" style="margin-top: 100px">
-  <form name="admin" ng_controller="adminCtrl">
-	client torrent's IP
-	<input type="text" name="ip" ng-model="admin.ip" />
+      <div ng-controller="adminDeamonCtrl">
+  <form name="torrent">
+	client torrent's ip
+	<input type="text" name="ip" ng-model="donnee.ip"/>
+  <button ng-click="send()">SAVE</button>
+  <form name="user">
 	User
-	<input type="text" />
+	<input type="text" ng-model="addUser"/>
 	Password
-	<input type="text" />
+	<input type="password" />
+  <button ng-click="add()">Ajouter utilisateur</button>
+
   </form>
+  <div>
+    liste des utilisateurs
+    <div ng-repeat="user in donnee.users">
+      {{user}}
+      <br />
+    </div>
+  </div>
   </div>
 </body>

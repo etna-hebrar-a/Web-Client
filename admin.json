@@ -1,8 +1,10 @@
 [
-	"ip" : 127.0.0.1
-	"users" : {
-		"toto"
-		"tata"
-		"titi"
-	}
+  {
+    "ip" : "127.0.0.1",
+    "users" : [
+      "toto",
+      "titi",
+      "tata"
+      ]
+  }
 ]
