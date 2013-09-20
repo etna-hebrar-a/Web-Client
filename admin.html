@@ -36,9 +36,9 @@
 			</div>
 			</div>
 			<div class="container-fluid" style="margin-top: 100px">
-  <form name="admin">
+  <form name="admin" ng_controller="adminCtrl">
 	client torrent's IP
-	<input type="text" />
+	<input type="text" name="ip" ng-model="admin.ip" />
 	User
 	<input type="text" />
 	Password
