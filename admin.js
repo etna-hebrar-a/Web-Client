@@ -26,11 +26,19 @@ function adminDeamonCtrl($scope, $http) {
   });
   $scope.addUser = '';
   $scope.add = function() {
-    $scope.data.users.push($scope.addUser);
-    $scope.addUser = '';
+    $scope.data.users.push($scope.addUser.name);
+    $scope.addUser.name = '';
+    $scope.addUser.mdp = '';
+    //voir avec Nicolas pour l'ahout d'utilisateur
   };
   
   $scope.suppr = function(user) {
     $scope.data.users.unset(user);
+    //voir avec nicolas pour la suppression d'utilisateur
+  };
+  
+  $scope.change_mdp = function(user) {
+    prompt('Tapez le nouveau mot de passe pour' + user,'Mot de passe');
+    //Voir avec nicolas pour les changements de mots de passe
   };
 }

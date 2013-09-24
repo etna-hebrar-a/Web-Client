@@ -14,7 +14,7 @@ function abstraction(data) {
     myTab[i].size_tot = d.size_tot;
     myTab[i].size_dl = d.size_dl;
     myTab[i].speed = d.speed;
-    myTab[i].date_ajout = d.date_ajout;
+    myTab[i].added_date = d.date_ajout;
     ++i;
   });
   return myTab;

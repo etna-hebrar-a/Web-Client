@@ -27,7 +27,7 @@
               <li class="active"><a href="./admin.html">Administration</a></li>
               <li class="divider-vertical"></li>
               <li>
-              <a href="./index.html" class="dropdown-toggle" data-toggle="dropdown">T&eacute;l&eacute;chargements </a>
+              <a href="./index.html">T&eacute;l&eacute;chargements </a>
               </li>
               <li class="divider-vertical"></li>
             </ul>
@@ -38,24 +38,24 @@
     <div class="container-fluid" style="margin-top: 100px">
       <div ng-controller="adminDeamonCtrl">
         <form name="torrent">
-          client torrent's ip
+          Adresse IP du client :
           <input type="text" name="ip" ng-model="data.ip"/>
           <button ng-click="send()">save</button>
         </form>
-        <form name="user" required>
-          User
-          <input type="text" ng-model="addUser"/>
-          Password
-          <input type="password" />
-          <input ng-click="add()" type="submit" value="add user" />
+        <form name="user" novalidate>
+          Login
+          <input type="text" ng-model="addUser.name" required/>
+          Mot de passe
+          <input type="password" ng-model="addUser.mdp" required/>
+          <button ng-click="add()" ng-disabled="user.$invalid || isUnchanged(addUser)">Ajouter l'utilisateur</button>
 
         </form>
         <div>
-          users list
+          Liste des utilisateur
           <div ng-repeat="user in data.users">
             {{user}}
-            <button ng-click="suppr(user)">delete</button>
-            <button ng-click="change_mdp()">change password</button>
+            <button ng-click="suppr(user)">supprimer</button>
+            <button ng-click="change_mdp(user)">changer le mot de passe</button>
             <br />
           </div>
         </div>
