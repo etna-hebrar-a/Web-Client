@@ -37,27 +37,36 @@
     </div>
     <div class="container-fluid" style="margin-top: 100px">
       <div ng-controller="adminDeamonCtrl">
-        <form name="torrent">
-          Adresse IP du client :
-          <input type="text" name="ip" ng-model="data.ip"/>
-          <button ng-click="send()">save</button>
-        </form>
-        <form name="user" novalidate>
-          Login
-          <input type="text" ng-model="addUser.name" required/>
-          Mot de passe
-          <input type="password" ng-model="addUser.mdp" required/>
-          <button ng-click="add()" ng-disabled="user.$invalid || isUnchanged(addUser)">Ajouter l'utilisateur</button>
-
-        </form>
-        <div>
-          Liste des utilisateur
-          <div ng-repeat="user in data.users">
-            {{user}}
-            <button ng-click="suppr(user)">supprimer</button>
-            <button ng-click="change_mdp(user)">changer le mot de passe</button>
-            <br />
-          </div>
+	  <div class="row-fluid">
+			<div class="span4">
+				<form name="torrent">
+					<h4>Client torrent's IP</h4>
+					<label>Insert an IP address:</label>
+					<input type="text" name="ip" ng-model="data.ip"/></li>
+					<input ng-click="send()" class="btn btn-info" value="Save" />
+				</form>
+			</div>
+			<div class="span4">
+				<h4>Add User</h4>
+				<form name="user" novalidate>
+					<label>User:</label>
+					<input type="text" ng-model="addUser.name" required />
+					<label>Password:</label>
+					<input type="password" ng-model="addUser.mdp" required />
+					<button ng-click="add()" ng-disabled="user.$invalid || isUnchanged(addUser)" class="btn btn-info">Ajouter l'utilisateur</button>
+				</form>
+			</div>
+			<div class="span4">
+				<h4>Users list</h4>
+				
+				<div ng-repeat="user in data.users">
+				<dl class="dl-horizontal">
+				<dt>{{user}}</dt>
+				<dd><button ng-click="suppr(user)" class="btn btn-danger">Delete </button>
+				<button ng-click="change_mdp()" class="btn btn-info">Change password</button></dd>
+				</dl>
+				</div>
+			</div>
         </div>
       </div>
     </div>
