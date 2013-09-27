@@ -1,34 +1,10 @@
-angular.module('ClientWeb', ['ui.bootstrap']);
-function getAddressListTorrent() {
-  return './list_torrent.json';
-}
-
-function abstraction(data) {
-  myTab = new Array();
-  var i = 0;
-  angular.forEach(data, function(d){
-    myTab[i] = new Object();
-    myTab[i].id_dl = d.id;
-    myTab[i].status = d.status;
-    myTab[i].name = d.name;
-    myTab[i].size_tot = d.size_tot;
-    myTab[i].size_dl = d.size_dl;
-    myTab[i].speed = d.speed;
-    myTab[i].added_date = d.date_ajout;
-    ++i;
-  });
-  return myTab;
-}
-
-function conversOctet(size) {
-  if (size < 1024) return size + 'Ko';
-  if ((size /= 1024) < 1024) return size.toFixed(2) + 'Mo';
-  if ((size /= 1024) < 1024) return size.toFixed(2) + 'Go';
-  if ((size /= 1024) < 1024) return size.toFixed(2) + 'To';
-}
-
-function listTorrentCtrl($scope, $http) {
-  $http.get(getAddressListTorrent()).success(function(data){
+var listTorrentCtrl = function($scope, $http, Base64) {
+  $scope.downloads = [];
+  $http.defaults.headers.common = {"Access-Control-Request-Headers": "accept, origin, authorization"}; //you probably don't need this line.  This lets me connect to my server on a different domain
+  $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('shunt' + ':' + 'secret');
+  $http(getAddressListTorrent()).
+  success(function(data){
+  $scope.toto = 'succes';
     $scope.downloads = abstraction(data);
     angular.forEach($scope.downloads, function(download) {
       //calcul pourcentage et status bar
@@ -51,6 +27,9 @@ function listTorrentCtrl($scope, $http) {
       download.size_dl = conversOctet(download.size_dl);
       download.collapse = true;
     });
+  }).
+  error(function() {
+    $scope.toto = 'error';
   });
 
     $scope.collapse = function(downloads, id) {
@@ -67,7 +46,16 @@ function listTorrentCtrl($scope, $http) {
     $scope.desc = false;
     $scope.pair = ['pair', 'impair'];
     $scope.test = 'all';
+    
+    $scope.addTorrent = function(url) {
+      $http(
+        {
+          methode: 'POST',
+          url: 'http://eip.pnode.fr:8000/torrents',
+        }, url);
+      $scope.close();
     }
+}
 
 var ajoutTelechargementCtrl = function ($scope) {
 
@@ -98,3 +86,35 @@ var ajoutTelechargementCtrl = function ($scope) {
   };
 
 };
+
+var adminDeamonCtrl = function($scope, $http) {
+  $http.get(getAddressAdmin()).success(function(data){
+    $scope.data = abstraction(data)
+  })
+  .error(function(data){
+    $scope.ip = 'error';
+  });
+  $scope.addUser = '';
+  $scope.add = function() {
+    $scope.data.users.push($scope.addUser.name);
+    $scope.addUser.name = '';
+    $scope.addUser.mdp = '';
+    //voir avec Nicolas pour l'ahout d'utilisateur
+  };
+  
+  $scope.suppr = function(user) {
+    $scope.data.users.unset(user);
+    //voir avec nicolas pour la suppression d'utilisateur
+  };
+  
+  $scope.change_mdp = function(user) {
+    prompt('Tapez le nouveau mot de passe pour' + user,'Mot de passe');
+    //Voir avec nicolas pour les changements de mots de passe
+  };
+}
+
+angular
+.module('ClientWeb.controllers', [])
+.controller('listTorrentCtrl', ['$scope', '$http', 'Base64', listTorrentCtrl])
+.controller('ajoutTelechargementCtrl', ['$scope',ajoutTelechargementCtrl])
+.controller('ConfigCtrl', ['$scope', '$http', adminDeamonCtrl])

@@ -1,0 +1,120 @@
+  <div ng-controller="listTorrentCtrl">
+    <div class="navbar navbar-inverse navbar-fixed-top" >
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="">
+            <img src="logo-site.png" />
+          </a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="divider-vertical"></li>
+              <li><a href="/#/admin">Administration</a></li>
+              <li class="divider-vertical"></li>
+              <li class="active">
+                <a href="/#/downloads">T&eacute;l&eacute;chargements </a>
+              </li>
+              <li class="divider-vertical"></li>
+            </ul>
+            <form class="navbar-form pull-left">
+              <input type="text" class="search-query" placeholder="Search" ng-model="query">
+              <select ng-model="order" ng-options="o.name for o in orders"></select>
+              <button type="button" class="btn btn-primary" ng-model="desc" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                Desc
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" style="margin-top: 100px">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="btn-group btn-group-vertical">
+            <button ng-model="test" type="button" class="btn btn-block" ng-click="filtre.status = ''; filtre.bar = ''" btn-radio="'all'"> 
+              Tout 
+            </button>
+            <button ng-model="test" type="button" class="btn btn-block" ng-click="filtre.bar = '100'; filtre.status = ''" btn-radio="'done'"> 
+              Telechargement fini 
+            </button>
+            <button ng-model="test" type="button" class="btn btn-block" ng-click="filtre.status = 'play'; filtre.bar = ''" btn-radio="'running'">
+              Telechargement en cours 
+            </button>
+            <button ng-model="test" type="button" class="btn btn-block"  ng-click="filtre.status = 'send'; filtre.bar = ''" btn-radio="'send'"> 
+              Envoie en cours 
+            </button>
+            <button ng-model="test" type="button" class="btn btn-block"  ng-click="filtre.status = 'pause'; filtre.bar = ''" btn-radio="'pause'">
+              En pause
+            </button>
+            <button ng-model="test" type="button" class="btn btn-block"  ng-click="filtre.status = 'stop'; filtre.bar = ''" btn-radio="'stop'">
+              Areter
+            </button>
+          </div>
+        </div>
+        <div class="span10">
+          <div class="container" >
+            <div class="add">
+              <div ng-controller="ajoutTelechargementCtrl">
+                <button class="btn" ng-click="open()">Ajouter un torrent</button>
+                <div modal="shouldBeOpen" close="close()" options="opts">
+                  <div class="modal-header">
+                    <h4>Ajouter un t&eacute;l&eacute;chargement HTTP</h4>
+                  </div>
+                  <div class="modal-body">
+                    Magnet links : <input ng-model="magnet" /><br />
+                    Ou<br />
+                    fichier torrent : <input type="file">
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+                    <button class="btn" ng-click="addTorrent(magnet)">Envoyer</button>
+                  </div>
+                </div>
+              </div>
+              <div ng-controller="ajoutTelechargementCtrl">
+                <button class="btn" ng-click="open()">Ajouter un t&eacute;l&eacute;chargement HTTP</button>
+                <div modal="shouldBeOpen" close="close()" options="opts">
+                  <div class="modal-header">
+                    <h4>Ajouter un t&eacute;l&eacute;chargement HTTP</h4>
+                  </div>
+                  <div class="modal-body">
+                    Url : <input ng-model="url" /><br />
+                    <input type="checkbox" ng-model="autent">Autentification requise<br />
+                    Login : <input ng-model="login"><br />
+                    Mot de passe : <input ng-model="mdp"><br />
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+                    <button class="btn" ng-click="close()">Envoyer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{downloads.length}} t&eacute;l&eacute;chargement(s) {{toto}}
+            <div class="{{pair[$index%2]}}" ng-repeat="download in downloads | filter:filtre | filter:query | orderBy:order.value:desc">
+              <div ng-click="collapse(downloads, download.id_dl) ; download.collapse = !download.collapse">
+                <div class='titre'>{{download.name}}</div>
+                <div class="progress {{download.bar_status}} ">
+                  <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>
+                </div>
+              </div>
+              <div collapse="download.collapse">
+                <div class='size'> taille : {{download.size_tot}} <div>
+                  <div class='size_tot'>taille dl : {{download.size_dl}} </div>
+                  <div class='date'>Date d'ajout : {{download.added_date}} </div>
+                  <div class='status'>Status : {{download.status}} </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
