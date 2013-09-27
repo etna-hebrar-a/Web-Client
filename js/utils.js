@@ -1,12 +1,12 @@
 function getAddressListTorrent() {
   return {
-    methode: 'GET',
+    method: 'GET',
     url: 'http://eip.pnode.fr:8000/torrents',
   }
 }
 
 
-function abstraction(data) {
+function abstractionDownloads(data) {
   myTab = new Array();
   var i = 0;
   angular.forEach(data, function(d){
@@ -41,7 +41,7 @@ Array.prototype.unset = function(val){
     }
 }
 
-function abstraction(data) {
+function abstractionAdmin(data) {
   myTab = new Object();
   myTab.ip = data[0].ip;
   myTab.users = data[0].users;

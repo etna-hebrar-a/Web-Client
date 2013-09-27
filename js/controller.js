@@ -5,7 +5,7 @@ var listTorrentCtrl = function($scope, $http, Base64) {
   $http(getAddressListTorrent()).
   success(function(data){
   $scope.toto = 'succes';
-    $scope.downloads = abstraction(data);
+    $scope.downloads = abstractionDownloads(data);
     angular.forEach($scope.downloads, function(download) {
       //calcul pourcentage et status bar
       download.bar = (download.size_dl / download.size_tot) * 100
@@ -89,7 +89,7 @@ var ajoutTelechargementCtrl = function ($scope) {
 
 var adminDeamonCtrl = function($scope, $http) {
   $http.get(getAddressAdmin()).success(function(data){
-    $scope.data = abstraction(data)
+    $scope.data = abstractionAdmin(data)
   })
   .error(function(data){
     $scope.ip = 'error';
