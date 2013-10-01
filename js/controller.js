@@ -1,7 +1,5 @@
 var listTorrentCtrl = function($scope, $http, Base64) {
   $scope.downloads = [];
-  $http.defaults.headers.common = {"Access-Control-Request-Headers": "accept, origin, authorization"}; //you probably don't need this line.  This lets me connect to my server on a different domain
-  $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('shunt' + ':' + 'secret');
   $http(getAddressListTorrent()).
   success(function(data){
   $scope.toto = 'succes';
@@ -111,6 +109,24 @@ var adminDeamonCtrl = function($scope, $http) {
     prompt('Tapez le nouveau mot de passe pour' + user,'Mot de passe');
     //Voir avec nicolas pour les changements de mots de passe
   };
+}
+
+var loginCtrl = function($scope,$http,$location,Base64) {
+  $scope.connect = function() {
+    $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($scope.login + ':' + $scope.pwd);
+    $http({
+        method: 'GET',
+        url: 'http://eip.pnode.fr:8000/torrents',
+      })
+      .success(function(){
+        $location.path('/downloads');
+      })
+      .error(function() {
+        $scope.error = 'erreur d\'identification';
+        $scope.login = '';
+        $scope.pwd = '';
+      });
+  }
 }
 
 angular
