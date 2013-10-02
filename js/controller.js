@@ -44,15 +44,32 @@ var listTorrentCtrl = function($scope, $http, Base64) {
     $scope.desc = false;
     $scope.pair = ['pair', 'impair'];
     $scope.test = 'all';
+    $scope.start = function(id) {
+      $http({
+	methode: get,
+	url: 'http://eip.pnode.fr:8000/torrents/'+id+'/start',
+      }).
+      succes().
+      error();
+    };
+    $scope.stop = function(id) {
+      $http({
+	methode: get,
+	url: 'http://eip.pnode.fr:8000/torrents/'+id+'/stop',
+      }).
+      succes().
+      error();
+    };
+    $scope.delete = function(id) {
+      $http({
+	methode: DELETE,
+	url: 'http://eip.pnode.fr:8000/torrents/'+id,
+      }).
+      succes().
+      error();
+    };
     
-    $scope.addTorrent = function(url) {
-      $http(
-        {
-          methode: 'POST',
-          url: 'http://eip.pnode.fr:8000/torrents',
-        }, url);
-      $scope.close();
-    }
+    
 }
 
 var ajoutTelechargementCtrl = function ($scope) {
@@ -76,6 +93,14 @@ var ajoutTelechargementCtrl = function ($scope) {
     $scope.alerts.splice(index, 1);
   };
 
+  $scope.addlTorrent = function(urlt) {
+    $http(
+      {
+        methode: 'POST',
+        url: 'http://eip.pnode.fr:8000/torrents',
+     }, url);
+    $scope.close();
+  }
   $scope.items = ['item1', 'item2'];
 
   $scope.opts = {
