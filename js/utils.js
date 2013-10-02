@@ -14,10 +14,10 @@ function abstractionDownloads(data) {
     myTab[i].id_dl = d.id;
     myTab[i].status = d.status;
     myTab[i].name = d.name;
-    myTab[i].size_tot = d.size_tot;
-    myTab[i].size_dl = d.size_dl;
+    myTab[i].size_tot = d.total_size;
+    myTab[i].size_dl = d.dl_size;
     myTab[i].speed = d.speed;
-    myTab[i].added_date = d.date_ajout;
+    myTab[i].added_date = d.added_date;
     ++i;
   });
   return myTab;
