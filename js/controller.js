@@ -1,4 +1,5 @@
-var listTorrentCtrl = function($scope, $http, Base64) {
+var listTorrentCtrl = function($scope, $http, Base64, $location) {
+  $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('shunt' + ':' + 'secret');
   $scope.downloads = [];
   $http(getAddressListTorrent()).
   success(function(data){
@@ -7,22 +8,28 @@ var listTorrentCtrl = function($scope, $http, Base64) {
     angular.forEach($scope.downloads, function(download) {
       //calcul pourcentage et status bar
       download.bar = (download.size_dl / download.size_tot) * 100
+      download.bar = download.bar.toFixed(2);
       if (download.bar == 100) {
         download.bar_type = 'bar-success';
-        if(download.status == 'send') 
+        if(download.status == 'DOWNLOAD') 
           download.bar_status = 'progress-striped active';
+      }
+      else if (download.status == 'DOWNLOAD') {
+        download.bar_status = 'progress-striped active';
       }
       else if (download.status == 'pause') {
         download.bar_type = 'bar-warning ';
         download.bar_status = 'progress-striped'
       }
-      else if(download.status == 'stop')
-        download.bar_type = 'bar-danger';
       else
-        download.bar_status = 'progress-striped active';
+        download.bar_type = 'bar-danger';
+      /*else
+        download.bar_status = 'progress-striped active';*/
       // convertion unite en patant du principe que l'unité de base est le Ko
       download.size_tot = conversOctet(download.size_tot);
       download.size_dl = conversOctet(download.size_dl);
+      download.speed = conversOctet(download.speed) + '/s';
+      download.added_date = Date(download.added_date).toString("dd/mm/yy");
       download.collapse = true;
     });
   }).
@@ -46,7 +53,7 @@ var listTorrentCtrl = function($scope, $http, Base64) {
     $scope.test = 'all';
     $scope.start = function(id) {
       $http({
-	methode: get,
+	method: 'GET',
 	url: 'http://eip.pnode.fr:8000/torrents/'+id+'/start',
       }).
       succes().
@@ -54,7 +61,7 @@ var listTorrentCtrl = function($scope, $http, Base64) {
     };
     $scope.stop = function(id) {
       $http({
-	methode: get,
+	method: 'GET',
 	url: 'http://eip.pnode.fr:8000/torrents/'+id+'/stop',
       }).
       succes().
@@ -62,17 +69,25 @@ var listTorrentCtrl = function($scope, $http, Base64) {
     };
     $scope.delete = function(id) {
       $http({
-	methode: DELETE,
+	method: 'DELETE',
 	url: 'http://eip.pnode.fr:8000/torrents/'+id,
       }).
       succes().
       error();
     };
     
-    
+  $scope.addTorrent = function(urlt) {
+    $http(
+      {
+        method: 'POST',
+        url: 'http://eip.pnode.fr:8000/torrents',
+        data: urlt
+     });
+        $location.path('/downloads');
+  }
 }
 
-var ajoutTelechargementCtrl = function ($scope) {
+var ajoutTelechargementCtrl = function($scope, $http, Base64) {
 
   $scope.alerts = [];
 
@@ -93,14 +108,7 @@ var ajoutTelechargementCtrl = function ($scope) {
     $scope.alerts.splice(index, 1);
   };
 
-  $scope.addlTorrent = function(urlt) {
-    $http(
-      {
-        methode: 'POST',
-        url: 'http://eip.pnode.fr:8000/torrents',
-     }, url);
-    $scope.close();
-  }
+
   $scope.items = ['item1', 'item2'];
 
   $scope.opts = {

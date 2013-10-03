@@ -16,7 +16,7 @@ function abstractionDownloads(data) {
     myTab[i].name = d.name;
     myTab[i].size_tot = d.total_size;
     myTab[i].size_dl = d.dl_size;
-    myTab[i].speed = d.speed;
+    myTab[i].speed = d.dl_rate;
     myTab[i].added_date = d.added_date;
     ++i;
   });
@@ -24,7 +24,8 @@ function abstractionDownloads(data) {
 }
 
 function conversOctet(size) {
-  if (size < 1024) return size + 'Ko';
+  if (size < 1024) return size + 'o';
+  if ((size /= 1024) < 1024) return size.toFixed(2) + 'Ko';
   if ((size /= 1024) < 1024) return size.toFixed(2) + 'Mo';
   if ((size /= 1024) < 1024) return size.toFixed(2) + 'Go';
   if ((size /= 1024) < 1024) return size.toFixed(2) + 'To';

@@ -100,17 +100,19 @@
                 <div class='titre'>{{download.name}}</div>
                 <div class="progress {{download.bar_status}} ">
                   <div class="bar {{download.bar_type}}" style="width: {{download.bar}}%;">{{download.bar}}%</div>
-		  <button ng-click="start(download.id_dl)"></button>
-		  <button ng-click="stop(download.id_dl)"></button>
-		  <button ng-click="delete(download.id_dl)"></button>
                 </div>
               </div>
               <div collapse="download.collapse">
-                <div class='size'> taille : {{download.size_tot}} <div>
+                <div class='size'> taille : {{download.size_tot}} </div>
                   <div class='size_tot'>taille dl : {{download.size_dl}} </div>
                   <div class='date'>Date d'ajout : {{download.added_date}} </div>
                   <div class='status'>Status : {{download.status}} </div>
+                  <div class='speed'> vitesse : {{download.speed}} </div>
+                  {{download.id_dl}}
                 </div>
+                <button ng-click="start(download.id_dl)"></button>
+		  <button ng-click="stop(download.id_dl)"></button>
+		  <button ng-click="delete(download.id_dl)"></button>
               </div>
             </div>
           </div>
