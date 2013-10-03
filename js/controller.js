@@ -1,9 +1,14 @@
 var listTorrentCtrl = function($scope, $http, Base64, $location) {
+  $scope.alerts = [];
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+  $scope.alerts.push({msg: 'Telechargement en cours de recuperation...'});
   $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode('shunt' + ':' + 'secret');
   $scope.downloads = [];
   $http(getAddressListTorrent()).
   success(function(data){
-  $scope.toto = 'succes';
+  $scope.alerts.push({type: 'success', msg: 'succes'});
     $scope.downloads = abstractionDownloads(data);
     angular.forEach($scope.downloads, function(download) {
       //calcul pourcentage et status bar
@@ -34,7 +39,7 @@ var listTorrentCtrl = function($scope, $http, Base64, $location) {
     });
   }).
   error(function() {
-    $scope.toto = 'error';
+    $scope.alerts.push({type: 'error', msg: 'error'});
   });
 
     $scope.collapse = function(downloads, id) {
@@ -81,7 +86,7 @@ var listTorrentCtrl = function($scope, $http, Base64, $location) {
       {
         method: 'POST',
         url: 'http://eip.pnode.fr:8000/torrents',
-        data: urlt
+        torrent: urlt
      });
         $location.path('/downloads');
   }
@@ -89,7 +94,7 @@ var listTorrentCtrl = function($scope, $http, Base64, $location) {
 
 var ajoutTelechargementCtrl = function($scope, $http, Base64) {
 
-  $scope.alerts = [];
+  
 
   $scope.open = function () {
     $scope.shouldBeOpen = true;
@@ -146,6 +151,8 @@ var adminDeamonCtrl = function($scope, $http) {
 
 var loginCtrl = function($scope,$http,$location,Base64) {
   $scope.connect = function() {
+    document.getElementById('connect').style.display = 'none';
+    document.getElementById('throbber').style.display = 'inline';
     $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($scope.login + ':' + $scope.pwd);
     $http({
         method: 'GET',
@@ -155,7 +162,9 @@ var loginCtrl = function($scope,$http,$location,Base64) {
         $location.path('/downloads');
       })
       .error(function() {
-        $scope.error = 'erreur d\'identification';
+        document.getElementById('connect').style.display = 'inline';
+        document.getElementById('throbber').style.display = 'none';
+        $scope.error = 'erreur d\'autentification';
         $scope.login = '';
         $scope.pwd = '';
       });

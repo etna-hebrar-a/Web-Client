@@ -1,9 +1,14 @@
-        <div class="page-container" ng-controller="loginCtrl">
+        <div class="span4"></div>
+        <div class="page-container span4" ng-controller="loginCtrl">
             <img src="./img/logo.png" width="350" height="257"/>
-            <form action="" method="post">
-                <input type="text" name="username" class="username" placeholder="Username" ng-model="login">
-                <input type="password" name="password" class="password" placeholder="Password" ng-model="pwd">
-                <button type="submit" ng-click="connect(login,pwd)">Connexion</button>
+            <form class="form-horizontal"action="" method="post">
+                <input type="text" name="username" class="span4" placeholder="Username" ng-model="login">
+                <input type="password" name="password" class="span4" placeholder="Password" ng-model="pwd">
+                <button id="connect" class="btn btn-info btn-large btn-block" type="submit" ng-click="connect(login,pwd)">Connexion</button>
+                <div id="throbber" style="display: none;text-align: center;"  class="span4">
+                <img src="./img/throbber-slow.gif" />
+               </div>
             </form>
             {{error}}
         </div>
+        <div class="span4"></div>
