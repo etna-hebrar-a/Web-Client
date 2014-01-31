@@ -6,6 +6,10 @@
 			<form class="style" action="" method="post">
 				<input type="text" name="username" class="input-block-level-style " placeholder="Username" ng-model="login">
 				<input type="password" name="password" class="input-block-level-style " placeholder="Password" ng-model="pwd">
+				<div class="inline">
+					<input type="text" name="daemon" class="input-large-inline-style" placeholder="Daemon address" ng-model=""> :
+					<input type="text" name="port" class="input-small-inline-style" placeholder="Port" ng-model="">
+				</div>
 				<button type="submit" class="style" ng-click="connect(login,pwd)">Connexion</button>                                        
 			</form>
 			{{error}}
