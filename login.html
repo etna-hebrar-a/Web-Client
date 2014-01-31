@@ -1,43 +1,14 @@
-
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-
-    <head>
-
-        <meta charset="utf-8">
-        <title>Fullscreen Login</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <!-- CSS -->
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
-        <link rel="stylesheet" href="assets/css/reset.css">
-        <link rel="stylesheet" href="assets/css/supersized.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
-    </head>
-
-    <body>
-
-        <div class="page-container">
-            <img src="assets/img/logo.png" width="350" height="257"/>
-            <form action="" method="post">
-                <input type="text" name="username" class="username" placeholder="Username">
-                <input type="password" name="password" class="password" placeholder="Password">
-                <button type="submit">Connexion</button>
-                <div class="error"><span>+</span></div>
+        <div class="span4"></div>
+        <div class="page-container span4" ng-controller="loginCtrl">
+            <img src="./img/logo.png" width="350" height="257"/>
+            <form class="form-horizontal"action="" method="post">
+                <input type="text" name="username" class="span4" placeholder="Username" ng-model="login">
+                <input type="password" name="password" class="span4" placeholder="Password" ng-model="pwd">
+                <button id="connect" class="btn btn-info btn-large btn-block" type="submit" ng-click="connect(login,pwd)">Connexion</button>
+                <div id="throbber" style="display: none;text-align: center;"  class="span4">
+                <img src="./img/throbber-slow.gif" />
+               </div>
             </form>
+            {{error}}
         </div>
-	        <!-- Javascript -->
-        <script src="assets/js/jquery-1.8.2.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
-    </body>
-
-</html>
-
+        <div class="span4"></div>
